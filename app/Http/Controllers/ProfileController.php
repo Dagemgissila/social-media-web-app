@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
+
+    public function index(User $user){
+        return Inertia::render('Profile/View', [
+            'mustVerifyEmail' => $user instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
+    }
     /**
      * Display the user's profile form.
      */

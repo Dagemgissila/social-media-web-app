@@ -11,8 +11,8 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div>
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+  
+        <div class="h-full overflow-hidden flex flex-col  bg-gray-100 dark:bg-gray-900">
             <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,9 +21,9 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <ApplicationLogo
+                                    <!-- <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
-                                    />
+                                    /> -->
                                 </Link>
                             </div>
 
@@ -64,7 +64,7 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('profile',{username:$page.props.auth.user.username})"> Profile </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
@@ -127,7 +127,7 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile',{username:$page.props.auth.user.username})"> Profile </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -144,9 +144,8 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1 overflow-hidden ">
                 <slot />
             </main>
         </div>
-    </div>
 </template>
