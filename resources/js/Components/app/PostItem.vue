@@ -2,7 +2,7 @@
   <div class="bg-white rounded border p-4 mb-3">
     <div class="flex items-center gap-2  mb-3">
       <a href="javascript:void(0)">
-        <img :src="post.user.avatar" class="w-[42px] rounded-full  border-2 transition-all  hover:border-blue-500 " />
+        <img :src="post.user.avatar_url" class="w-[42px] h-[42px] rounded-full  border-2 transition-all  hover:border-blue-500 " />
       </a>
       <div>
         <h4 class="font-bold">
@@ -20,6 +20,7 @@
     <Disclosure v-slot="{ open }">
       <div v-if="!open" v-html="post.body.substring(0, 200)"></div>
 
+    <template v-if="post.body.length >= 200">
       <DisclosurePanel class="">
         <div v-html="post.body"></div>
       </DisclosurePanel>
@@ -29,6 +30,7 @@
 
         </DisclosureButton>
       </div>
+    </template>
     </Disclosure>
 
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 mb-3">
