@@ -23,6 +23,7 @@ Route::get('/u/{user:username}',[ProfileController::class,'index'])->name('profi
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update-images', [ProfileController::class, 'updateImages'])->name('profile.updateImages');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
