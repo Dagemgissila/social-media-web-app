@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -20,6 +21,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/View', [
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
+            "success"=>session('success'),
             'user' => new UserResource($user),
 
         ]);
@@ -37,16 +39,30 @@ class ProfileController extends Controller
         $cover=$data["cover"] ?? null ;
 
         if($cover){
-            $path=$cover->store("covers/".$user->id,"public");
+
+            if($user->cover_path){
+                Storage::disk("public")->delete($user->cover_path);
+            }
+
+            $path=$cover->store("user-".$user->id,"public");
             $user->update(["cover_path"=>$path]);
+            $success='your cover image updated';
         }
+
 
         if($avatar){
-            $path=$avatar->storeAs("avators/".$user->id,"public");
-            $user->update(["avatar_path"=>$path]);
-        }
 
-        return back()->with("status","cover-image-update");
+            if($user->avatar_path){
+                Storage::disk("public")->delete($user->avatar_path);
+            }
+
+            $path=$avatar->store("avatar-".$user->id,"public");
+            $user->update(["avatar_path"=>$path]);
+            $success='your avatar image updated';
+
+        }
+     
+        return back()->with("success",$success);
 
 
     }
@@ -74,7 +90,9 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return to_route("profile",$request->user())->with("success","Your Profile Detail updated");
+
+
     }
 
     /**

@@ -24,7 +24,7 @@ class UserResource extends JsonResource
                 "updated_at"=> $this->updated_at,
                 "username"=> $this->username,
                 "cover_url"=> Storage::url($this->cover_path),
-                "avater_path"=> $this->avater_path
+                "avatar_url"=> Storage::url($this->avatar_path)
         ];
     }
 }
