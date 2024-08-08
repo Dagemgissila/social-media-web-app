@@ -3,6 +3,7 @@
 				<a href="javascript:void(0)">
 					<img
 						:src="post.user.avatar_url"
+						alt="sdfjk"
 						class="w-[42px] h-[42px] rounded-full border-2 transition-all hover:border-blue-500"
 					/>
 				</a>

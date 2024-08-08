@@ -72,11 +72,11 @@
 </div>
 		</div>
 		<Disclosure v-slot="{ open }">
-			<div v-if="!open" v-html="post.body.substring(0, 200)"></div>
+			<div class="ck-content" v-if="!open" v-html="post.body.substring(0, 200)"></div>
 
-			<template v-if="post.body.length >= 200">
+			<template  v-if="post.body.length >= 200">
 				<DisclosurePanel class="">
-					<div v-html="post.body"></div>
+					<div class="ck-content" v-html="post.body"></div>
 				</DisclosurePanel>
 				<div class="flex justify-end">
 					<DisclosureButton class="text-blue-300 hover:underline">
@@ -192,9 +192,6 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 const props=defineProps({
 	post: Object,
 });
-
-
-
 
 function isImage(attachment) {
 	const mime = attachment.mime.split("/");

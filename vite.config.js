@@ -3,11 +3,20 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+    optimizeDeps: {
+        include: ['ckeditor5-custom-build']
+    },
+    build: {
+        commonjsOptions: {
+            exclude: ['ckeditor5-custom-build']
+        }
+    },
     plugins: [
         laravel({
             input: 'resources/js/app.js',
             refresh: true,
         }),
+        
         vue({
             template: {
                 transformAssetUrls: {
@@ -16,5 +25,7 @@ export default defineConfig({
                 },
             },
         }),
+        
+
     ],
 });

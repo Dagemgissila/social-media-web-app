@@ -34,10 +34,15 @@
 									as="h3"
 									class="text-lg font-medium leading-6 text-gray-900"
 								>
-									Update Post
+									{{ form.id ? "Update Form" : "Create Post" }}
 								</DialogTitle>
 								<PostUserHeader :post="post" :showTime="false" />
-								<div class="mt-2">
+								<ckeditor
+            v-model="form.body"
+            :editor="editor"
+            :config="editorConfig"
+        />
+								<!-- <div class="mt-2">
 									<p class="text-sm text-gray-500">
 										<InputTextarea
 											v-model="form.body"
@@ -46,7 +51,7 @@
 										>
 										</InputTextarea>
 									</p>
-								</div>
+								</div> -->
 
 								<div class="mt-4">
 									<button
@@ -70,6 +75,8 @@
 import { computed, ref, watch } from "vue";
 import InputTextarea from "../InputTextarea.vue";
 import PostUserHeader from "./PostUserHeader.vue";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import {
 	TransitionRoot,
 	TransitionChild,
@@ -79,6 +86,17 @@ import {
 } from "@headlessui/vue";
 import { useForm } from "@inertiajs/vue3";
 
+const editor = ref(ClassicEditor);
+const editorData = ref('<p>Hello from CKEditor 5 in Vue!</p>');
+
+// Define editor configuration
+const editorConfig = ref({
+  
+    toolbar: ['bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'heading', '|', 'outdent', 'indent', '|', 'link', '|', 'blockQuote'],
+
+});
+
+
 function closeModal() {
 	show.value = false;
 }
@@ -86,7 +104,7 @@ function closeModal() {
 const props = defineProps({
 	post: {
 		type: Object,
-		required: true,
+		required: false,
 	},
 	modelValue: Boolean,
 });
@@ -109,10 +127,22 @@ const show = computed({
 const emit = defineEmits(["update:modelValue", false]);
 
 function submit() {
-	form.put(route("post.update", props.post), {
+	if(form.id){
+		form.put(route("post.update", props.post), {
 		onSuccess: () => {
+			form.reset()
 			show.value = false;
 		},
 	});
+	}
+	else{
+		form.post(route('post.create'),{
+        onSuccess:()=>{
+			form.reset()
+            show.value=false;
+        }
+    })
+	}
+
 }
 </script>
