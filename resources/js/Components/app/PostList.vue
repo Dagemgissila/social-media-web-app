@@ -1,21 +1,19 @@
 <template>
 	<div class="h-full flex-1 overflow-auto">
-		<PostItem
-			v-for="post in posts"
-			:key="post.id"
-			:post="post"
-			@editClick="openEditModal"
-		/>
+		<PostItem v-for="post in posts" :key="post.id" :post="post" @editClick="openEditModal" />
 		<PostModal :post="editPost" v-model="showEditModal" />
 	</div>
+
 </template>
 <script setup>
 import PostItem from "./PostItem.vue";
 import PostModal from "./PostModal.vue";
 import { ref } from "vue";
-const showEditModal = ref(false);
+const showEditModal = ref(false)
 
-const editPost = ref({});
+const editPost = ref({
+
+})
 
 function openEditModal(post) {
 	editPost.value = post;
@@ -24,8 +22,11 @@ function openEditModal(post) {
 
 defineProps({
 	posts: {
-		type: Array,
-	},
-});
+		type: Array
+	}
+})
+
 </script>
-<style lang=""></style>
+<style lang="">
+
+</style>
