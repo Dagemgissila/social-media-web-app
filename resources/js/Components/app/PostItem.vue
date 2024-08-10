@@ -70,8 +70,8 @@
 			post.attachments.length == 1 ? 'grid-cols-1' : 'grid-cols-2'
 		]">
 			<template v-for="(attachment, ind) in post.attachments.slice(0, 4)" :key="attachment.id">
-				<div class="group aspect-square z-10 bg-blue-100 flex flex-col items-center justify-center relative">
-					<div v-if="ind == 3" class="absolute top-0 left-0 right-0 bottom-0 z-10
+				<div  @click="openAttachment.ind" class="group cursor-pointer aspect-square z-10 bg-blue-100 flex flex-col items-center justify-center relative">
+					<div v-if="ind == 3 && post.attachments.length > 4" class="absolute top-0 left-0 right-0 bottom-0 z-10
 											   bg-black/60 text-white text-2xl flex items-center justify-center">
 						+{{ post.attachments.length - 4 }} more
 					</div>
@@ -139,10 +139,15 @@ function isImage(attachment) {
 }
 
 
-const emit = defineEmits(["editClick"])
+const emit = defineEmits(["editClick","attachmentClick"])
 
 function openEditModal() {
 	emit("editClick", props.post)
+}
+
+
+function openAttachment(ind) {
+    emit('attachmentClick', props.post, ind)
 }
 
 function deletePost() {
