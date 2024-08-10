@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-class UpdatePostRequest extends FormRequest
+use Illuminate\Validation\Rules\File;
+
+class UpdatePostRequest extends StorePostRequeust
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,16 +19,14 @@ class UpdatePostRequest extends FormRequest
         return $post->user_id == Auth::id();
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        return [
-            "body"=>["nullable","string"],
-            'user_id' => ['numeric'],
-        ];
+        $rules = parent::rules();
+        unset($rules['group_id']);
+
+        return array_merge($rules, [
+            'deleted_file_ids' => 'array',
+            'deleted_file_ids.*' => 'numeric',
+        ]);
     }
 }

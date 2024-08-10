@@ -5,7 +5,7 @@
 			<PostUserHeader :post="post" />
 
 			<div>
-				<Menu as="div" class="relative inline-block text-left">
+				<Menu as="div" class="relative inline-block text-left z-50">
 					<div>
 						<MenuButton
 							class="w-8 h-8 rounded-full hover:bg-black/20 transition flex items-center justify-center">
@@ -67,19 +67,19 @@
 		</Disclosure>
 
 		<div class="grid gap-2 mb-3" :class="[
-			post.attachments.length==1 ? 'grid-cols-1' : 'grid-cols-2'
+			post.attachments.length == 1 ? 'grid-cols-1' : 'grid-cols-2'
 		]">
-			<template v-for="(attachment, ind) in post.attachments.slice(0,4)" :key="attachment.id">
+			<template v-for="(attachment, ind) in post.attachments.slice(0, 4)" :key="attachment.id">
 				<div class="group aspect-square z-10 bg-blue-100 flex flex-col items-center justify-center relative">
 					<div v-if="ind == 3" class="absolute top-0 left-0 right-0 bottom-0 z-10
 											   bg-black/60 text-white text-2xl flex items-center justify-center">
 						+{{ post.attachments.length - 4 }} more
 					</div>
 					<!-- download -->
-					<button
+					<a :href="route('post.download', attachment)"
 						class="opacity-0 z-10 group-hover:opacity-100 transition-all w-8 h-8 flex items-center justify-center text-gray-100 bg-gray-700 hover:bg-gray-800 rounded absolute right-2 top-2 cursor-pointer">
 						<ArrowDownTrayIcon class="w-5 h-5" />
-					</button>
+					</a>
 
 					<img v-if="isImage(attachment)" :src="attachment.url" class="object-cover aspect-square" alt="" />
 
@@ -121,7 +121,7 @@
 
 <script setup>
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import { ChevronDownIcon, PencilIcon, TrashIcon, EllipsisVerticalIcon ,ArrowDownTrayIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, PencilIcon, TrashIcon, EllipsisVerticalIcon, ArrowDownTrayIcon } from '@heroicons/vue/20/solid'
 import { ChatBubbleLeftRightIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline'
 
 import PostUserHeader from './PostUserHeader.vue';
