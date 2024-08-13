@@ -11,14 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-/**
- * Class Post
- *
- * @author  Zura Sekhniashvili <zurasekhniashvili@gmail.com>
- * @property Group $group
- * @package App\Models
- *
- */
+
 class Post extends Model
 {
     use HasFactory;

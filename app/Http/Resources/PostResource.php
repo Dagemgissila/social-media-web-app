@@ -33,14 +33,7 @@ class PostResource extends JsonResource
         ];
     }
 
-    /**
-     *
-     *
-     * @param \App\Models\Comment[] $comments
-     * @param                       $parentId
-     * @return array
-     * @author Zura Sekhniashvili <zurasekhniashvili@gmail.com>
-     */
+
     private static function convertCommentsIntoTree($comments, $parentId = null): array
     {
         $commentTree = [];

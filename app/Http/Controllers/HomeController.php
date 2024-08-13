@@ -30,15 +30,8 @@ class HomeController extends Controller
                     ->where('gu.user_id', '=', $userId)
                     ->where('gu.status', GroupUserStatus::APPROVED->value);
             })
-            ->where(function($query) use ($userId) {
-                /** @var \Illuminate\Database\Query\Builder $query */
-                $query->whereNotNull('f.follower_id')
-                    ->orWhereNotNull('gu.group_id')
-                    ->orWhere('posts.user_id', $userId)
-                    ;
-            })
-//            ->whereNot('posts.user_id', $userId)
-            ->paginate(10);
+    
+            ->paginate(100);
 
         $posts = PostResource::collection($posts);
         if ($request->wantsJson()) {
